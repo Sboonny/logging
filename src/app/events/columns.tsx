@@ -34,14 +34,21 @@ export type Columns = Pick<Event, "action" | "actor_name" | "occurred_at">;
 export const columns: ColumnDef<Event>[] = [
   {
     accessorFn: (row) => row.action.name,
-    header: "Action",
+    header: "ACTION",
   },
   {
     accessorKey: "actor_name",
-    header: "Actor",
+    header: "ACTOR",
   },
   {
     accessorKey: "occurred_at",
-    header: "Date",
+    header: "DATE",
+    cell: ({ row }) => {
+        const formatted = new Intl.DateTimeFormat("en-US", {
+            dateStyle: "medium",
+            timeStyle: "short",
+            }).format(new Date(row.original.occurred_at));
+        return  formatted
+    }
   },
 ];

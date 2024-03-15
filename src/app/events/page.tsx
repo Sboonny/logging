@@ -1,4 +1,5 @@
-import { type Event, columns } from "./columns";
+import type { Event } from "~/interface";
+import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
 async function getData(): Promise<Event[]> {
@@ -27,9 +28,9 @@ async function getData(): Promise<Event[]> {
   ];
 }
 
-export default async function DemoPage() {
+export default async function Page() {
   const data = await getData();
-  console.log(data);
+
   return (
     <div className="container mx-auto py-10">
       <DataTable columns={columns} data={data} />

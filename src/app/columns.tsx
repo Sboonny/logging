@@ -6,7 +6,7 @@ import type { Event } from "~/interface";
 
 export const columns: ColumnDef<Event>[] = [
   {
-    accessorFn: (row) => row.action.name,
+    accessorKey: "target_name",
     header: "ACTION",
   },
   {

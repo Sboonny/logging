@@ -1,17 +1,32 @@
+import fp from "fastify-plugin";
+import type { FastifyPluginAsync } from "fastify";
 import { PrismaClient } from "@prisma/client";
-
 import { env } from "~/env";
 
-const createPrismaClient = () =>
-  new PrismaClient({
+declare module "fastify" {
+  interface FastifyInstance {
+    prisma: PrismaClient;
+  }
+}
+
+const prismaPlugin: FastifyPluginAsync = fp(async (server, _options) => {
+  const prisma = new PrismaClient({
+    datasources: {
+      db: {
+        url: env.DATABASE_URL,
+      },
+    },
     log:
-      env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+      env.NODE_ENV === "development" ? ["query", "info", "warn", "error"] : [],
   });
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: ReturnType<typeof createPrismaClient> | undefined;
-};
+  await prisma.$connect();
 
-export const db = globalForPrisma.prisma ?? createPrismaClient();
+  server.decorate("prisma", prisma);
 
-if (env.NODE_ENV !== "production") globalForPrisma.prisma = db;
+  server.addHook("onClose", async (server) => {
+    await server.prisma.$disconnect();
+  });
+});
+
+export default prismaPlugin;

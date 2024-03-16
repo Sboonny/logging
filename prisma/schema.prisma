@@ -11,7 +11,6 @@ datasource db {
 }
 
 model EventAction {
-  id        Int     @id @default(autoincrement())
   action_id String  @unique
   object    String
   name      String
@@ -19,10 +18,9 @@ model EventAction {
 }
 
 model Metadata {
-  id           Int     @id @default(autoincrement())
+  x_request_id String  @unique
   redirect     String
   description  String
-  x_request_id String
   Event        Event[]
 }
 
@@ -39,10 +37,10 @@ model Event {
   target_name String
   location    String
   occurred_at String
-  metadata_id Int
-  metadata    Metadata    @relation(fields: [metadata_id], references: [id])
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  metadata_id String
+  metadata    Metadata    @relation(fields: [metadata_id], references: [x_request_id])
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @updatedAt
 
   @@index([actor_name])
 }

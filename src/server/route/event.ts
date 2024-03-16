@@ -25,6 +25,7 @@ export function eventRoutes(fastify: FastifyInstance, _options: FastifyPluginOpt
     //     });
 
     //     const createdEvent = await fastify.prisma.event.create({
+        // ToDo: fix the type error with it being undefined an null
     //         data: {
     //             object: body.object,
     //             actor_id: body.actor_id,

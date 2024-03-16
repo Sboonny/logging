@@ -11,10 +11,11 @@ datasource db {
 }
 
 model EventAction {
-  id     String  @id @default(uuid())
-  object String
-  name   String
-  Event  Event[]
+  id        Int     @id @default(autoincrement())
+  action_id String  @unique
+  object    String
+  name      String
+  Event     Event[]
 }
 
 model Metadata {
@@ -27,12 +28,13 @@ model Metadata {
 
 model Event {
   id          Int         @id @default(autoincrement())
+  event_id    String
   object      String
   actor_id    String
   actor_name  String
   group       String
   action_id   String
-  action      EventAction @relation(fields: [action_id], references: [id])
+  action      EventAction @relation(fields: [action_id], references: [action_id])
   target_id   String
   target_name String
   location    String

@@ -1,6 +1,7 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
+import { StrokeIcon } from "~/components/icons/stroke";
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
 import type { Event } from "~/interface";
 
@@ -32,7 +33,7 @@ export const columns: ColumnDef<Event>[] = [
         dateStyle: "medium",
         timeStyle: "short",
       }).format(new Date(row.original.occurred_at));
-      return formatted;
+      return <div className="flex justify-between">{formatted} <StrokeIcon /></div>;
     },
   },
 ];

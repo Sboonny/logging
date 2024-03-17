@@ -38,5 +38,9 @@
     "**/*.js",
     ".next/types/**/*.ts"
  ],
+ "ts-node": {
+  "esm": true,
+  "experimentalSpecifierResolution": "node"
+ },
   "exclude": ["node_modules"]
 }

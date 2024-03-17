@@ -3,7 +3,7 @@ import type {
   FastifyPluginOptions,
   FastifyError,
 } from "fastify";
-import { type Event } from "~/interface";
+import { type Event } from "../../interface";
 
 export function eventRoutes(
   fastify: FastifyInstance,

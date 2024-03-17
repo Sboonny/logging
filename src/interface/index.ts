@@ -19,18 +19,12 @@ type Metadata = {
     actor_id: string;
     actor_name: string;
     group: string;
-    action_id: string;
     target_id: string;
     target_name: string;
     location: string;
     occurred_at: string;
-    metadata_id: string;
     createdAt: Date;
     updatedAt: Date;
-  }
-  
-
-  export type EventWithRelations = Event & {
     action: EventAction;
     metadata: Metadata;
-  };
+  }

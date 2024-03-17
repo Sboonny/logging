@@ -10,20 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model EventAction {
-  action_id String  @unique
-  object    String
-  name      String
-  Event     Event[]
-}
-
-model Metadata {
-  x_request_id String  @unique
-  redirect     String
-  description  String
-  Event        Event[]
-}
-
 model Event {
   id          Int         @id @default(autoincrement())
   event_id    String
@@ -31,14 +17,12 @@ model Event {
   actor_id    String
   actor_name  String
   group       String
-  action_id   String
-  action      EventAction @relation(fields: [action_id], references: [action_id])
+  action      Json
   target_id   String
   target_name String
   location    String
   occurred_at String
-  metadata_id String
-  metadata    Metadata    @relation(fields: [metadata_id], references: [x_request_id])
+  metadata    Json  
   created_at   DateTime    @default(now())
   updated_at   DateTime    @updatedAt
 

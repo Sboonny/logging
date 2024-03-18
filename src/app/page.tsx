@@ -1,7 +1,6 @@
 
 import { type Event } from "~/interface";
-import { columns } from "./columns";
-import { DataTable } from "./data-table";
+import { EventTable } from "./event-table";
 
 async function getData(): Promise<Event[]> {
   return [
@@ -105,7 +104,7 @@ export default async function HomePage() {
 
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
+      <EventTable />
     </div>
   );
 }

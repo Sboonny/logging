@@ -8,13 +8,13 @@ import type { Event } from "~/interface";
 export const columns: ColumnDef<Event>[] = [
   {
     accessorKey: "target_name",
-    header: "ACTION",
+    header: "ACTOR",
     cell: ({ row }) => {
       return (
         <div className="flex items-center gap-4">
           <Avatar>
             <AvatarImage src="" />
-            <AvatarFallback className="bg-gradient-to-br from-[#F3994A] to-[#B325E2] text-white font-bold">{row.original.actor_name.charAt(0)}</AvatarFallback>
+            <AvatarFallback className="bg-gradient-to-br from-[#F3994A] to-[#B325E2] text-white font-bold" aria-hidden="true">{row.original.actor_name.charAt(0)}</AvatarFallback>
           </Avatar>
           {row.original.target_name}
         </div>
@@ -22,8 +22,8 @@ export const columns: ColumnDef<Event>[] = [
     },
   },
   {
-    accessorKey: "actor_name",
-    header: "ACTOR",
+    accessorKey: "action.name",
+    header: "ACTION",
   },
   {
     accessorKey: "occurred_at",

@@ -1,18 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-"use client"
-import useSWR from "swr";
-import { DataTable } from "./data-table";
-import { columns } from "./columns";
+
+"use client";
 import type { Event } from "~/interface";
+import { columns } from "./columns";
+import { DataTable } from "./data-table";
+import useSWR from "swr";
 
-     
-export function EventTable({getData}: {getData: () => Promise<unknown>}) {
-    const { data, error } = useSWR("/api/event", getData);
-    console.log("data:", data)
+async function getEvent() {
+  const response = await fetch("/api/events");
+  return response.json();
+}
 
-    if (error) return <div>Failed to load</div>;
-    if (!data) return <div>Loading...</div>;
+export function EventTable() {
+  const { data, error, isLoading } = useSWR("/api/events", getEvent);
 
-    return <DataTable columns={columns} data={data as Event[]} />;
+  if (error) return <div>Failed to load</div>;
+  if (isLoading) return <div>Loading...</div>;
+
+  const { events }: { events: Event[] } = data;
+
+  return <DataTable columns={columns} data={events ?? []} />;
 }

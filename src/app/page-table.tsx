@@ -11,8 +11,8 @@ async function getEvent() {
   return response.json();
 }
 
-export function EventTable() {
-  const { data, error, isLoading } = useSWR("/api/events", getEvent);
+export function PageTable() {
+  const { data, error, isLoading } = useSWR("/api/events?limit=3", getEvent);
 
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;

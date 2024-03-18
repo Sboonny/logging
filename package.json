@@ -11,7 +11,8 @@
     "dev:fastify": "node --loader ts-node/esm src/server/app.ts",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "seed": "node prisma/seed/index.cjs"
   },
   "dependencies": {
     "@prisma/client": "^5.10.2",

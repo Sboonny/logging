@@ -4,9 +4,7 @@ import type { Event } from "~/interface";
 const primsa = new PrismaClient();
 
 export async function GET() {
-  const events = await primsa.event.findMany({
-    take: 3,
-  });
+  const events = await primsa.event.findMany();
 
   return Response.json({ events });
 }

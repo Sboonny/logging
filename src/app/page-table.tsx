@@ -2,8 +2,8 @@
 
 "use client";
 import type { Event } from "~/interface";
-import { columns } from "./columns";
-import { DataTable } from "./data-table";
+import { columns } from "../components/data-table/columns";
+import { DataTable } from "../components/data-table/data-table";
 import useSWR from "swr";
 
 async function getEvent() {

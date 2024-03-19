@@ -6,7 +6,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { DetailsTable } from "~/components/details-table.tsx/event-table";
 
 import {
   Table,
@@ -65,11 +64,11 @@ export function DataTable<TData, TValue>({
                           cell.column.columnDef.cell,
                           cell.getContext(),
                         )}
-                          <DetailsTable
-                          columns={detailsColumns} data={[row.original] as Event[]}
-                          />
                       </TableCell>
                     ))}
+                    {/* <DetailsTable
+                    columns={detailsColumns} data={[row.original] as Event[]}
+                    /> */}
                   </TableRow>
               ))
             ) : (

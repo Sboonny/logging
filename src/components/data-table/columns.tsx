@@ -3,6 +3,17 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
 import type { Event } from "~/interface";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "../ui/dialog";
+import { MoreHorizontal } from "lucide-react";
+import { DetailsTable } from "../details-table.tsx/details-table";
+import { detailsColumns } from "../details-table.tsx/columns";
 
 export const columns: ColumnDef<Event>[] = [
   {
@@ -38,7 +49,25 @@ export const columns: ColumnDef<Event>[] = [
         timeStyle: "short",
       }).format(new Date(row.original.occurred_at));
       return (
-              {formatted}
+        <div className="flex justify-between">
+          {formatted}
+          <Dialog>
+            <DialogTrigger>
+              <span className="sr-only">Open for more details</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogDescription asChild>
+                  <DetailsTable
+                    columns={detailsColumns}
+                    data={[row.original]}
+                  />
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        </div>
       );
     },
   },

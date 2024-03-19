@@ -6,8 +6,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { EventTable } from "~/components/event-table";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "~/components/ui/accordion";
 
 import {
   Table,
@@ -17,13 +15,14 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import type { Event } from "~/interface";
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TValue = Event, TData = Event> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function DetailsTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -54,17 +53,14 @@ export function DataTable<TData, TValue>({
             </TableRow>
           ))}
         </TableHeader>
-        <Accordion type="multiple" asChild>
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <AccordionItem key={row.id} value={row.id}>
                 <TableRow
+                  key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  <AccordionTrigger key={row.id}>
                   {row.getVisibleCells().map((cell) => (
-                  
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -72,14 +68,7 @@ export function DataTable<TData, TValue>({
                       )}
                     </TableCell>
                   ))}
-                  <AccordionContent>
-                    <EventTable 
-                    // data={row}
-                     />
-                  </AccordionContent>
-                  </AccordionTrigger>
                 </TableRow>
-                </AccordionItem>
               ))
             ) : (
               <TableRow>
@@ -92,7 +81,6 @@ export function DataTable<TData, TValue>({
               </TableRow>
             )}
           </TableBody>
-        </Accordion>
       </Table>
     </div>
   );

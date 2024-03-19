@@ -1,10 +1,7 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import { EventTable } from "~/components/event-table";
-import { StrokeIcon } from "~/components/icons/stroke";
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
-
 import type { Event } from "~/interface";
 
 export const columns: ColumnDef<Event>[] = [
@@ -41,9 +38,7 @@ export const columns: ColumnDef<Event>[] = [
         timeStyle: "short",
       }).format(new Date(row.original.occurred_at));
       return (
-        <div className="flex justify-between">
-          {formatted}<StrokeIcon />
-        </div>
+              {formatted}
       );
     },
   },

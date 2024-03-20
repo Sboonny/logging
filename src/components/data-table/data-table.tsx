@@ -5,7 +5,8 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  getPaginationRowModel
+  getPaginationRowModel,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -16,10 +17,11 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import type { Event } from "~/interface";
 import { Button } from "../ui/button";
+import { useState } from "react";
+import { DebouncedInput } from "../debounce-input";
 
-interface DataTableProps<TValue, TData = Event> {
+interface DataTableProps<TValue, TData> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
@@ -28,15 +30,27 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const [globalFilter, setGlobalFilter] = useState("")
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel()
+    getPaginationRowModel: getPaginationRowModel(),
+    state:{
+      globalFilter
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    getFilteredRowModel: getFilteredRowModel(),
   });
 
   return (
     <div className="rounded-md border">
+      <DebouncedInput
+          value={globalFilter ?? ''}
+          onChange={value => setGlobalFilter(String(value))}
+          className="p-2 font-lg shadow border border-block"
+          placeholder="Search all columns..."
+        />
       <Table>
         <TableHeader className="bg-background-secondary">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -68,9 +82,6 @@ export function DataTable<TData, TValue>({
                         )}
                       </TableCell>
                     ))}
-                    {/* <DetailsTable
-                    columns={detailsColumns} data={[row.original] as Event[]}
-                    /> */}
                   </TableRow>
               ))
             ) : (

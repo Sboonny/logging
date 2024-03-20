@@ -8,7 +8,6 @@ import {
   DialogTrigger,
   DialogContent,
   DialogHeader,
-  DialogTitle,
   DialogDescription,
 } from "../ui/dialog";
 import { MoreHorizontal } from "lucide-react";

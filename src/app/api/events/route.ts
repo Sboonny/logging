@@ -35,5 +35,5 @@ export async function POST(req: Request) {
     },
   });
 
-  return createdEvent;
+  return Response.json({createdEvent});
 }
